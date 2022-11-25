@@ -15,14 +15,22 @@ public class FirstTest extends BaseTest {
         startPage.getURL();
         startPage.getPageTitle();
         startPage.getSize();
-        startPage.buttonYes().hide();
+        startPage.buttonYes().click();
+        try {
+            Thread.sleep(1000);
+        }catch (InterruptedException e){
+            e.printStackTrace();
+        }
         startPage.linkAppliances().click();
 
-        AppliancesPage appliancesPage = new AppliancesPage(driver);
-        appliancesPage.linkKitchenAppliances().click();
 
+
+        AppliancesPage appliancesPage = new AppliancesPage(driver);
         AppliancesTextDisplayMatcher appliancesTextDisplayMatcher = new AppliancesTextDisplayMatcher(appliancesPage);
         appliancesTextDisplayMatcher.pageTitleDisplay(appliancesPage.textAppliances());
+        appliancesPage.linkKitchenAppliances().click();
+
+
 
         KitchenAppliancesPage kitchenAppliancesPage = new KitchenAppliancesPage(driver);
 
