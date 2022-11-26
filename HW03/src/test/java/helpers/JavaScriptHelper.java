@@ -29,7 +29,7 @@ public class JavaScriptHelper {
     }
 
     public static void displayNone(WebElement element){
-        String script = "argument[0].style.display='none';";
+        String script = "arguments[0].style.display='none';";
         javascriptExecutor.executeScript(script, element);
 
         try {

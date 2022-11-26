@@ -1,6 +1,7 @@
 package pages;
 
 
+import elements.Block;
 import elements.Button;
 import elements.Link;
 import org.apache.logging.log4j.LogManager;
@@ -11,12 +12,15 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class StartPage extends BasePage{
     private Logger logger = LogManager.getLogger(StartPage.class);
     private final String URL = "https://www.dns-shop.ru/";
 
-    @FindBy(xpath = "//span[text()=\"Всё верно\"]")
-    private WebElement buttonYes;
+    @FindBy(xpath = "//div[@class='v-confirm-city']")
+    private WebElement blockYes;
 
     @FindBy(xpath = "//a[text()='Бытовая техника']")
     private WebElement linkAppliances;
@@ -25,7 +29,7 @@ public class StartPage extends BasePage{
     private WebElement linkDrinksPreparation;
 
     @FindBy(xpath = "//a[text()='Приготовление напитков']//a")
-    private WebElement linksSubmenuDrinksPreparation;
+    private List<WebElement> linksSubmenuDrinksPreparation;
 
     @FindBy(xpath = "//a[text()='Приготовление напитков']//a[text()='Электрочайники']")
     private WebElement linkElectricKettles;
@@ -52,7 +56,7 @@ public class StartPage extends BasePage{
     }
 
     public String getURL() {
-        logger.info(this.URL);
+        logger.info((this.URL) + "");
         return this.URL;
     }
 
@@ -73,8 +77,8 @@ public class StartPage extends BasePage{
         logger.info("Открыта страница https://www.dns-shop.ru/");
     }
 
-    public Button buttonYes() {
-        return new Button(buttonYes);
+    public Block blockYes() {
+        return new Block(blockYes);
     }
 
     public Link linkAppliances(){
@@ -85,8 +89,8 @@ public class StartPage extends BasePage{
         return new Link(linkDrinksPreparation);
     }
 
-    public Link linksSubmenuDrinksPreparation(){
-        return new Link(linksSubmenuDrinksPreparation);
+    public List<WebElement> linksSubmenuDrinksPreparation(){
+        return new ArrayList<>(linksSubmenuDrinksPreparation);
     }
 
     public Link linkElectricKettles(){

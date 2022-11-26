@@ -38,6 +38,9 @@ public class WindowHelper {
         return window.manage().window().getSize();
     }
 
+    public static String getWindowHandle(){
+        return window.getWindowHandle();
+    }
     public static void setWindowSize(Dimension dimension){
         window.manage().window().setSize(dimension);
     }

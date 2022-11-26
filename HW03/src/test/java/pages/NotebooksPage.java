@@ -12,6 +12,9 @@ import java.util.List;
 
 public class NotebooksPage extends BasePage {
     private Logger logger = LogManager.getLogger(NotebooksPage.class);
+
+    @FindBy(xpath = "//header")
+    private WebElement blockHeader;
     @FindBy(xpath = "//span[contains(text(), \"Сортировка:\")]/following::a")
     private WebElement accordeonSort;
 
@@ -24,10 +27,10 @@ public class NotebooksPage extends BasePage {
     @FindBy(xpath = "//span[@class=\"ui-collapse__link-text\" and text()=\"Производитель\"]/../../div//label/span[1]")
     private List<WebElement> checkboxCompany;
 
-    @FindBy(xpath = "//span[@class=\"ui-collapse__link-text\" and text()=\"Объем оперативной памяти\"]")
+    @FindBy(xpath = "//span[@class=\"ui-collapse__link-text\" and text()='Объем оперативной памяти (ГБ)']")
     private WebElement accordeonRAM;
 
-    @FindBy(xpath = "//span[@class=\"ui-collapse__link-text\" and text()=\"Объем оперативной памяти\"]/../../div//label/span[1]")
+    @FindBy(xpath = "//span[@class=\"ui-collapse__link-text\" and text()=\"Объем оперативной памяти (ГБ)\"]/../../div//label/span[1]")
     private List<WebElement> checkboxRAM;
 
     @FindBy(xpath = "//button[contains(text(), \"Применить\")]")
@@ -38,6 +41,7 @@ public class NotebooksPage extends BasePage {
 
     public NotebooksPage(WebDriver driver) {
         super(driver);
+
         PageFactory.initElements(driver, this);
     }
 
@@ -78,6 +82,10 @@ public class NotebooksPage extends BasePage {
             }
         }
         return null;
+    }
+
+    public Block blockHeader() {
+        return new Block(blockHeader);
     }
 
     public Button buttonApply() {

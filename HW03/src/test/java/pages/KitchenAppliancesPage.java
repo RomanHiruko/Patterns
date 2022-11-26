@@ -1,13 +1,15 @@
 package pages;
 
 import elements.Link;
-import elements.Text;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class KitchenAppliancesPage extends BasePage {
     private Logger logger = LogManager.getLogger(KitchenAppliancesPage.class);
@@ -16,7 +18,7 @@ public class KitchenAppliancesPage extends BasePage {
     private WebElement linkMakeKitchen;
 
     @FindBy(xpath = "//div[@class='subcategory__item-container ']/a")
-    private WebElement linksSubCategories;
+    private List<WebElement> linksSubCategories;
 
     @FindBy(xpath = "//h1[text()='Техника для кухни']")
     private WebElement textKitchenAppliances;
@@ -26,15 +28,21 @@ public class KitchenAppliancesPage extends BasePage {
         PageFactory.initElements(driver, this);
     }
 
-    public Link linksSubCategories(){
-        return new Link(linksSubCategories);
+    public List<WebElement> linksSubCategories(){
+        return new ArrayList<>(linksSubCategories);
+    }
+    public void allCategories() {
+        List<WebElement> elements = this.linksSubCategories;
+        for (WebElement element : elements) {
+            logger.info(element.getText());
+        }
     }
 
     public Link linkMakeKitchen(){
         return new Link(linkMakeKitchen);
     }
 
-    public Text textKitchenAppliances(){
-        return new Text(textKitchenAppliances);
+    public Link textKitchenAppliances(){
+        return new Link(textKitchenAppliances);
     }
 }
