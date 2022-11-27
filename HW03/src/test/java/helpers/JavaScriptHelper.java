@@ -38,4 +38,9 @@ public class JavaScriptHelper {
             e.printStackTrace();
         }
     }
+
+    public static void scrollTo(WebElement webElement){
+        String script = "arguments[0].scrollIntoView(true);";
+        javascriptExecutor.executeScript(script, webElement);
+    }
 }

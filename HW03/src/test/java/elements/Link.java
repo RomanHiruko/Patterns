@@ -23,10 +23,6 @@ public class Link extends BaseElement {
         return webElement.getAttribute(attr);
     }
 
-    public void focusOnLink() {
-        ActionHelper.moveToElement(webElement);
-    }
-
     public void openInNewWindow() {
         String URL = this.getURL();
         SwitchHelper.switchToNewWindow();

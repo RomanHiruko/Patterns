@@ -17,4 +17,8 @@ public class ActionHelper {
     public static void moveToElement(WebElement webElement) {
         actions.moveToElement(webElement).perform();
     }
+
+    public static void scrollTo(WebElement webElement){
+        actions.scrollToElement(webElement).perform();
+    }
 }

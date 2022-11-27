@@ -17,6 +17,7 @@ public class BasePage {
         NavigationHelper.init(driver);
         WindowHelper.init(driver);
         SwitchHelper.init(driver);
+        ScreenshotHelper.init(driver);
     }
 
     public String getPageTitle() {

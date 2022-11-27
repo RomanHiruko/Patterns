@@ -15,6 +15,9 @@ public class NotebooksPage extends BasePage {
 
     @FindBy(xpath = "//header")
     private WebElement blockHeader;
+
+    @FindBy(xpath = "//div[@class='products-list__content']")
+    private WebElement linkCatalog;
     @FindBy(xpath = "//span[contains(text(), \"Сортировка:\")]/following::a")
     private WebElement accordeonSort;
 
@@ -69,6 +72,10 @@ public class NotebooksPage extends BasePage {
             }
         }
         return null;
+    }
+
+    public Link linkCatalog() {
+        return new Link(linkCatalog);
     }
 
     public Accordeon accordeonRAM() {

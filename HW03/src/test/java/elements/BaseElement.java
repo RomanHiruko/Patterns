@@ -1,6 +1,7 @@
 package elements;
 
 import com.fasterxml.jackson.databind.ser.Serializers;
+import helpers.ActionHelper;
 import org.openqa.selenium.WebElement;
 
 public class BaseElement {
@@ -12,5 +13,9 @@ public class BaseElement {
 
     public WebElement getWebElement(){
         return webElement;
+    }
+
+    public void focusOnLink() {
+        ActionHelper.moveToElement(webElement);
     }
 }

@@ -1,6 +1,6 @@
 package tests.notebooks;
 
-import helpers.JavaScriptHelper;
+import helpers.*;
 import org.junit.jupiter.api.Test;
 import pages.NotebookPage;
 import pages.NotebooksPage;
@@ -13,9 +13,11 @@ public class ThirdTest extends BaseTest {
     String titleOldWindow;
     String titleDescription;
     String textRam;
+
     @Test
     public void dnsTest() {
         //1. Arrange
+        String expected = "Купить 16\" Ноутбук ASUS ROG Flow X16 GV601RW-M6064X черный";
         String company = "ASUS";
         String ram = "32 ГБ";
         String type = "Сначала дорогие";
@@ -26,6 +28,7 @@ public class ThirdTest extends BaseTest {
         //3. Assert
         NotebookTitleMatcher notebookTitleMatcher = new NotebookTitleMatcher(notebookPage);
         notebookTitleMatcher.pageTitleEquals(titleOldWindow);
+        notebookTitleMatcher.pageExpectedEquals(expected);
         LinkContainsValueMatcher linkContainsValueMatcher = new LinkContainsValueMatcher(notebookPage);
         linkContainsValueMatcher.linkContainsValue(notebookPage.textDescription(), titleDescription);
         linkContainsValueMatcher.linkContainsValue(notebookPage.textRam(), textRam);
@@ -35,42 +38,41 @@ public class ThirdTest extends BaseTest {
     public NotebookPage getNotebookPage(String company, String ram, String type) {
         StartPage startPage = new StartPage(driver);
         startPage.openPage();
-        startPage.blockYes().hide();
-        startPage.linkPcAndPeripheralXpath().focusOnLink();
-        try {
-            Thread.sleep(500);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        startPage.buttonYes().click();
+        WaitHelper.readyStateComplete();
+        ScreenshotHelper.makeScreenshot();
+        startPage.linkPcAndPeripheral().focusOnLink();
+        WaitHelper.clickabilityOfElement(startPage.linkNotebooks().getWebElement());
+        ScreenshotHelper.makeScreenshot();
+        startPage.linkPcAndPeripheral().focusOnLink();
+        WaitHelper.clickabilityOfElement(startPage.linkNotebooks().getWebElement());
         startPage.linkNotebooks().click();
 
         NotebooksPage notebooksPage = new NotebooksPage(driver);
+        ScreenshotHelper.makeScreenshot();
         notebooksPage.blockHeader().hide();
+        ScreenshotHelper.makeScreenshot();
         notebooksPage.accordeonSort().show();
         notebooksPage.radioButtonSort(type).setSelected(true);
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        JavaScriptHelper.scrollBy(0, 900);
+        JavaScriptHelper.scrollTo(notebooksPage.checkBoxCompany(company).getWebElement());
         notebooksPage.checkBoxCompany(company).setChecked(true);
-        JavaScriptHelper.scrollBy(0, 500);
+        JavaScriptHelper.scrollBy(0, 600);
         notebooksPage.accordeonRAM().show();
         notebooksPage.checkboxRAM(ram).setChecked(true);
-        JavaScriptHelper.scrollBy(0, 400);
+        JavaScriptHelper.scrollBy(0, 600);
         notebooksPage.buttonApply().click();
-        JavaScriptHelper.scrollBy(0, -2000);
-        String titleOldWindow = notebooksPage.linkFirstProduct().getAttribute("outerText");
-        this.titleOldWindow = titleOldWindow;
+        WaitHelper.propertyLoad(notebooksPage.linkCatalog().getWebElement(), "style", "[]");
+        ScreenshotHelper.makeScreenshot();
+        this.titleOldWindow = notebooksPage.linkFirstProduct().getAttribute("outerText");
         notebooksPage.linkFirstProduct().openInNewWindow();
 
         NotebookPage notebookPage = new NotebookPage(driver);
-        notebookPage.blockYes().hide();
-        JavaScriptHelper.scrollBy(0, 700);
+        ScreenshotHelper.makeScreenshot();
+        JavaScriptHelper.scrollTo(notebookPage.buttonExpand().getWebElement());
+        notebooksPage.blockHeader().hide();
         notebookPage.buttonExpand().click();
+        JavaScriptHelper.scrollBy(0, -2000);
         this.titleDescription = notebookPage.textDescription().getText();
-        JavaScriptHelper.scrollBy(0, 600);
         this.textRam = notebookPage.textRam().getText();
         return new NotebookPage(driver);
     }

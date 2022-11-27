@@ -34,6 +34,9 @@ public class StartPage extends BasePage{
     @FindBy(xpath = "//a[text()='Приготовление напитков']//a[text()='Электрочайники']")
     private WebElement linkElectricKettles;
 
+    @FindBy(xpath = "//span[text()='Всё верно']")
+    private WebElement buttonYes;
+
     @FindBy(xpath = "//a[text()='Встраиваемая техника']")
     private WebElement linkEmbeddedTechnology;
 
@@ -81,6 +84,10 @@ public class StartPage extends BasePage{
         return new Block(blockYes);
     }
 
+    public Button buttonYes(){
+        return new Button(buttonYes);
+    }
+
     public Link linkAppliances(){
         return new Link(linkAppliances);
     }
@@ -109,7 +116,7 @@ public class StartPage extends BasePage{
         return new Link(linkHomeAppliances);
     }
 
-    public Link linkPcAndPeripheralXpath(){
+    public Link linkPcAndPeripheral(){
         return new Link(linkPcAndPeripheralXpath);
     }
 
