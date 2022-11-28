@@ -40,7 +40,7 @@ public class JavaScriptHelper {
     }
 
     public static void scrollTo(WebElement webElement){
-        String script = "arguments[0].scrollIntoView(true);";
+        String script = "arguments[0].scrollIntoView(false);";
         javascriptExecutor.executeScript(script, webElement);
     }
 }

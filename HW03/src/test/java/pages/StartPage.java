@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class StartPage extends BasePage{
-    private Logger logger = LogManager.getLogger(StartPage.class);
+    private final Logger logger = LogManager.getLogger(StartPage.class);
     private final String URL = "https://www.dns-shop.ru/";
 
     @FindBy(xpath = "//div[@class='v-confirm-city']")

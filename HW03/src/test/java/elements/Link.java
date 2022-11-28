@@ -1,14 +1,15 @@
 package elements;
 
-import helpers.*;
+import helpers.NavigationHelper;
+import helpers.SwitchHelper;
+import helpers.WaitHelper;
+import helpers.WindowHelper;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.WebElement;
 
-import java.util.List;
-
 public class Link extends BaseElement {
-    private Logger logger = LogManager.getLogger(Link.class);
+    private final Logger logger = LogManager.getLogger(Link.class);
 
     public Link(WebElement webElement) {
         super(webElement);
@@ -19,7 +20,7 @@ public class Link extends BaseElement {
         webElement.click();
     }
 
-    public String getAttribute(String attr){
+    public String getAttribute(String attr) {
         return webElement.getAttribute(attr);
     }
 
@@ -42,7 +43,7 @@ public class Link extends BaseElement {
         return webElement.isDisplayed();
     }
 
-    public String Text(){
+    public String Text() {
         return webElement.getText();
     }
 }
