@@ -2,7 +2,6 @@ package tests.notebooks.matchers;
 
 import elements.Link;
 import org.junit.jupiter.api.Assertions;
-import org.openqa.selenium.WebElement;
 import pages.AppliancesPage;
 
 public class AppliancesTextDisplayMatcher {

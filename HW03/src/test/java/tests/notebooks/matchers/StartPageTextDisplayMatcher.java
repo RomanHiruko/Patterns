@@ -7,11 +7,13 @@ import pages.StartPage;
 public class StartPageTextDisplayMatcher {
     StartPage page;
 
-    public StartPageTextDisplayMatcher(StartPage page){
+    public StartPageTextDisplayMatcher(StartPage page) {
         this.page = page;
     }
 
-    public void linkDisplay(Link element){
-        Assertions.assertTrue(element.isDisplayed(), "Ссылка не отображается");
+    public void linkDisplay(Link[] args) {
+        for (Link element : args) {
+            Assertions.assertTrue(element.isDisplayed(), "Ссылка не отображается");
+        }
     }
 }

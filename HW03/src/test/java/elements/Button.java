@@ -1,6 +1,5 @@
 package elements;
 
-import helpers.ActionHelper;
 import helpers.JavaScriptHelper;
 import helpers.WaitHelper;
 import org.openqa.selenium.WebElement;

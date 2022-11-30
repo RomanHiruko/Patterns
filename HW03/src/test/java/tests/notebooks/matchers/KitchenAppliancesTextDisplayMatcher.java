@@ -12,7 +12,9 @@ public class KitchenAppliancesTextDisplayMatcher {
         this.page = page;
     }
 
-    public void pageTitleDisplay(Link element) {
-        Assertions.assertTrue(element.isDisplayed(), "Текст не отображается!");
+    public void pageTitleDisplay(Link[] args) {
+        for (Link element : args) {
+            Assertions.assertTrue(element.isDisplayed(), "Текст не отображается!");
+        }
     }
 }

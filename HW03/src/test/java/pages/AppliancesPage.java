@@ -27,7 +27,7 @@ public class AppliancesPage extends BasePage {
         return new Link(linkKitchenAppliances);
     }
 
-    public Link textAppliances(){
+    public Link textAppliances() {
         return new Link(textAppliances);
     }
 }
