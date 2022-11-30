@@ -1,17 +1,16 @@
 package elements;
 
-import com.fasterxml.jackson.databind.ser.Serializers;
 import helpers.ActionHelper;
 import org.openqa.selenium.WebElement;
 
 public class BaseElement {
     protected WebElement webElement;
 
-    public BaseElement(WebElement webElement){
+    public BaseElement(WebElement webElement) {
         this.webElement = webElement;
     }
 
-    public WebElement getWebElement(){
+    public WebElement getWebElement() {
         return webElement;
     }
 

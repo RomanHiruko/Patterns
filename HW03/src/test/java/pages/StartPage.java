@@ -15,7 +15,7 @@ import org.openqa.selenium.support.PageFactory;
 import java.util.ArrayList;
 import java.util.List;
 
-public class StartPage extends BasePage{
+public class StartPage extends BasePage {
     private final Logger logger = LogManager.getLogger(StartPage.class);
     private final String URL = "https://www.dns-shop.ru/";
 
@@ -52,6 +52,9 @@ public class StartPage extends BasePage{
     @FindBy(xpath = "//a[text()='Ноутбуки']")
     private WebElement linkNotebooks;
 
+    @FindBy(xpath = "//header")
+    private WebElement blockHeader;
+
     public StartPage(WebDriver driver) {
         super(driver);
 
@@ -63,7 +66,7 @@ public class StartPage extends BasePage{
         return this.URL;
     }
 
-    public Dimension getSize(){
+    public Dimension getSize() {
         Dimension size = driver.manage().window().getSize();
         logger.info(size);
         return size;
@@ -84,43 +87,47 @@ public class StartPage extends BasePage{
         return new Block(blockYes);
     }
 
-    public Button buttonYes(){
+    public Button buttonYes() {
         return new Button(buttonYes);
     }
 
-    public Link linkAppliances(){
+    public Link linkAppliances() {
         return new Link(linkAppliances);
     }
 
-    public Link linkDrinksPreparation(){
+    public Link linkDrinksPreparation() {
         return new Link(linkDrinksPreparation);
     }
 
-    public List<WebElement> linksSubmenuDrinksPreparation(){
+    public List<WebElement> linksSubmenuDrinksPreparation() {
         return new ArrayList<>(linksSubmenuDrinksPreparation);
     }
 
-    public Link linkElectricKettles(){
+    public Link linkElectricKettles() {
         return new Link(linkElectricKettles);
     }
 
-    public Link linkEmbeddedTechnology(){
+    public Link linkEmbeddedTechnology() {
         return new Link(linkEmbeddedTechnology);
     }
 
-    public Link linkKitchenAppliances(){
+    public Link linkKitchenAppliances() {
         return new Link(linkKitchenAppliances);
     }
 
-    public Link linkHomeAppliances(){
+    public Link linkHomeAppliances() {
         return new Link(linkHomeAppliances);
     }
 
-    public Link linkPcAndPeripheral(){
+    public Link linkPcAndPeripheral() {
         return new Link(linkPcAndPeripheralXpath);
     }
 
-    public Link linkNotebooks(){
+    public Link linkNotebooks() {
         return new Link(linkNotebooks);
+    }
+
+    public Block blockHeader() {
+        return new Block(blockHeader);
     }
 }

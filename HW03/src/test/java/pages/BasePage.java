@@ -25,13 +25,18 @@ public class BasePage {
         return title;
     }
 
-    public String getURL(){
+    public String getURL() {
         String URL = driver.getCurrentUrl();
         return URL;
     }
 
-    public Dimension getSize(){
+    public Dimension getSize() {
         Dimension size = driver.manage().window().getSize();
         return size;
+    }
+
+    public static int getY() {
+        int currY = driver.manage().window().getPosition().getY();
+        return currY;
     }
 }

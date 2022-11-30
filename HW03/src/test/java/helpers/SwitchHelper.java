@@ -10,47 +10,47 @@ public class SwitchHelper {
     private static Logger logger = LogManager.getLogger(SwitchHelper.class);
     private static WebDriver switcher;
 
-    public static void init(WebDriver driver){
+    public static void init(WebDriver driver) {
         switcher = driver;
     }
 
-    public static void switchToExistWindow(String window){
+    public static void switchToExistWindow(String window) {
         switcher.switchTo().window(window);
     }
 
-    public static void switchToNewWindow(){
+    public static void switchToNewWindow() {
         switcher.switchTo().newWindow(WindowType.WINDOW);
     }
 
-    public static void switchToNewTab(){
+    public static void switchToNewTab() {
         switcher.switchTo().newWindow(WindowType.TAB);
     }
 
-    public static void switchAlert(){
+    public static void switchAlert() {
         switcher.switchTo().alert();
     }
 
-    public static void switchToFrameByIndex(int index){
+    public static void switchToFrameByIndex(int index) {
         switcher.switchTo().frame(index);
     }
 
-    public static void switchToFrameByNameOrId(String nameOrId){
+    public static void switchToFrameByNameOrId(String nameOrId) {
         switcher.switchTo().frame(nameOrId);
     }
 
-    public static void switchToFrameByFrameWebElement(WebElement element){
+    public static void switchToFrameByFrameWebElement(WebElement element) {
         switcher.switchTo().frame(element);
     }
 
-    public static void switchToDefaultContent(){
+    public static void switchToDefaultContent() {
         switcher.switchTo().defaultContent();
     }
 
-    public static void switchToParentFrame(){
+    public static void switchToParentFrame() {
         switcher.switchTo().parentFrame();
     }
 
-    public static void switchToActiveWebElement(){
+    public static void switchToActiveWebElement() {
         switcher.switchTo().activeElement();
     }
 }

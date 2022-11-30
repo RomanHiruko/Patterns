@@ -29,7 +29,7 @@ public class NotebookPage extends BasePage {
         PageFactory.initElements(driver, this);
     }
 
-    public Link textRam(){
+    public Link textRam() {
         return new Link(textRam);
     }
 
@@ -37,11 +37,11 @@ public class NotebookPage extends BasePage {
         return new Block(blockYes);
     }
 
-    public Link textTitle(){
+    public Link textTitle() {
         return new Link(textTitle);
     }
 
-    public Link textDescription(){
+    public Link textDescription() {
         return new Link(textDescription);
     }
 

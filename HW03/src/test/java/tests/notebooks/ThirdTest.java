@@ -82,16 +82,16 @@ public class ThirdTest extends BaseTest {
         notebooksPage.radioButtonSort(type).setSelected(true);
 
         //Выбрать в фильтре Производитель значение ASUS
-        JavaScriptHelper.scrollBy(0, 600);
+        JavaScriptHelper.scrollIntoView(notebooksPage.checkBoxCompany(company).getWebElement());
         notebooksPage.checkBoxCompany(company).setChecked(true);
 
         //Выбрать в фильтре Объем оперативной памяти значение 32 ГБ
-        JavaScriptHelper.scrollBy(0, 600);
+        JavaScriptHelper.scrollIntoView(notebooksPage.accordeonRAM().getWebElement());
         notebooksPage.accordeonRAM().show();
         notebooksPage.checkboxRAM(ram).setChecked(true);
 
         //Применить фильтры и сделать скриншот
-        JavaScriptHelper.scrollBy(0, 600);
+        JavaScriptHelper.scrollIntoView(notebooksPage.buttonApply().getWebElement());
         notebooksPage.buttonApply().click();
         WaitHelper.propertyLoad(notebooksPage.linkCatalog().getWebElement(), "style", "[]");
         ScreenshotHelper.makeScreenshot();
@@ -108,7 +108,7 @@ public class ThirdTest extends BaseTest {
         ScreenshotHelper.makeScreenshot();
 
         //Нажать кнопку Развернуть все
-        JavaScriptHelper.scrollTo(notebookPage.buttonExpand().getWebElement());
+        JavaScriptHelper.scrollIntoView(notebookPage.buttonExpand().getWebElement());
         notebooksPage.blockHeader().hide();
         notebookPage.buttonExpand().click();
         JavaScriptHelper.scrollBy(0, -2000);

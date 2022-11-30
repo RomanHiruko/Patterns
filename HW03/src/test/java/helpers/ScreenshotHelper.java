@@ -18,7 +18,7 @@ import static org.openqa.selenium.Keys.HOME;
 public class ScreenshotHelper {
     private static Logger logger = LogManager.getLogger(ScreenshotHelper.class);
     private static WebDriver screen;
-    private static int number = 1;
+    private static int number;
 
     public static void init(WebDriver driver) {
         screen = driver;
@@ -26,6 +26,7 @@ public class ScreenshotHelper {
 
     public static void makeScreenshot() {
         try {
+            number += 1;
             Actions actions = new Actions(screen);
             actions
                     .sendKeys(END)
@@ -35,7 +36,6 @@ public class ScreenshotHelper {
                     .shootingStrategy(ShootingStrategies.viewportPasting(100))
                     .takeScreenshot(screen);
             ImageIO.write(screenshot.getImage(), "png", new File("temp\\Screenshot_" + number + ".png"));
-            number += 1;
         } catch (IOException e) {
             e.printStackTrace();
         }

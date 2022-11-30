@@ -8,23 +8,23 @@ public class NavigationHelper {
     private static Logger logger = LogManager.getLogger(NavigationHelper.class);
     private static WebDriver navigation;
 
-    public static void init(WebDriver driver){
+    public static void init(WebDriver driver) {
         navigation = driver;
     }
 
-    public static void navigateTo(String URL){
+    public static void navigateTo(String URL) {
         navigation.navigate().to(URL);
     }
 
-    public static void back(){
+    public static void back() {
         navigation.navigate().back();
     }
 
-    public static void forward(){
+    public static void forward() {
         navigation.navigate().forward();
     }
 
-    public static void refresh(){
+    public static void refresh() {
         navigation.navigate().refresh();
     }
 }

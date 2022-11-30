@@ -7,11 +7,11 @@ import pages.NotebookPage;
 public class LinkContainsValueMatcher {
     NotebookPage page;
 
-    public LinkContainsValueMatcher(NotebookPage page){
+    public LinkContainsValueMatcher(NotebookPage page) {
         this.page = page;
     }
 
-    public void linkContainsValue(Link link, String value){
+    public void linkContainsValue(Link link, String value) {
         Assertions.assertTrue(link.getText().contains(value), "Текст не содержит значение!");
     }
 }

@@ -28,9 +28,10 @@ public class KitchenAppliancesPage extends BasePage {
         PageFactory.initElements(driver, this);
     }
 
-    public List<WebElement> linksSubCategories(){
+    public List<WebElement> linksSubCategories() {
         return new ArrayList<>(linksSubCategories);
     }
+
     public void allCategories() {
         List<WebElement> elements = this.linksSubCategories;
         for (WebElement element : elements) {
@@ -38,11 +39,11 @@ public class KitchenAppliancesPage extends BasePage {
         }
     }
 
-    public Link linkMakeKitchen(){
+    public Link linkMakeKitchen() {
         return new Link(linkMakeKitchen);
     }
 
-    public Link textKitchenAppliances(){
+    public Link textKitchenAppliances() {
         return new Link(textKitchenAppliances);
     }
 }
