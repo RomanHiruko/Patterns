@@ -1,6 +1,5 @@
 package pages;
 
-import elements.Block;
 import elements.Button;
 import elements.Link;
 import org.openqa.selenium.WebDriver;
@@ -21,9 +20,6 @@ public class NotebookPage extends BasePage {
     @FindBy(xpath = "//div[@class='product-card-top__name']")
     private WebElement textTitle;
 
-    @FindBy(xpath = "//div[@class='v-confirm-city']")
-    private WebElement blockYes;
-
     public NotebookPage(WebDriver driver) {
         super(driver);
         PageFactory.initElements(driver, this);
@@ -31,10 +27,6 @@ public class NotebookPage extends BasePage {
 
     public Link textRam() {
         return new Link(textRam);
-    }
-
-    public Block blockYes() {
-        return new Block(blockYes);
     }
 
     public Link textTitle() {

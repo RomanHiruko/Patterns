@@ -1,5 +1,6 @@
 package tests.notebooks;
 
+import elements.Link;
 import helpers.JavaScriptHelper;
 import helpers.ScreenshotHelper;
 import helpers.WaitHelper;
@@ -16,12 +17,14 @@ import tests.notebooks.matchers.NotebookTitleMatcher;
 
 public class ThirdTest extends BaseTest {
     String titleOldWindow;
-    String titleDescription;
-    String textRam;
 
     @Test
     public void dnsTest() {
+        NotebookPage np = new NotebookPage(driver);
+
         //1. Arrange
+        Link[] links = {np.textDescription(), np.textRam()};
+        String[] values = {"ASUS", "32 ГБ"};
         String expected = "16\" Ноутбук ASUS ROG Flow X16 GV601RW-M6064X черный";
         String company = "ASUS";
         String ram = "32 ГБ";
@@ -33,16 +36,12 @@ public class ThirdTest extends BaseTest {
         //3. Assert
         //Проверить, что первый товар соответствует ожидаемому
         NotebookTitleMatcher notebookTitleMatcher = new NotebookTitleMatcher(notebookPage);
-        notebookTitleMatcher.pageTitleEquals(titleOldWindow);
-        notebookTitleMatcher.pageExpectedEquals(expected);
+        notebookTitleMatcher.pageTitleEquals(titleOldWindow, expected);
 
         //Проверить, что в разделе Характеристики содержится значение ASUS
-        LinkContainsValueMatcher linkContainsValueMatcher = new LinkContainsValueMatcher(notebookPage);
-        linkContainsValueMatcher.linkContainsValue(notebookPage.textDescription(), titleDescription);
-
         //Проверить, что значение ОЗУ равно 32 ГБ
-        linkContainsValueMatcher.linkContainsValue(notebookPage.textRam(), textRam);
-
+        LinkContainsValueMatcher linkContainsValueMatcher = new LinkContainsValueMatcher(notebookPage);
+        linkContainsValueMatcher.linkContainsValue(links, values);
     }
 
     public NotebookPage getNotebookPage(String company, String ram, String type) {
@@ -113,10 +112,6 @@ public class ThirdTest extends BaseTest {
         notebookPage.buttonExpand().click();
         JavaScriptHelper.scrollBy(0, -2000);
 
-
-        //Проверить значение в разделе характеристики и ОЗУ
-        this.titleDescription = notebookPage.textDescription().getText();
-        this.textRam = notebookPage.textRam().getText();
         return new NotebookPage(eventFiringWebDriver);
     }
 }

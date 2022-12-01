@@ -4,12 +4,9 @@ import helpers.NavigationHelper;
 import helpers.SwitchHelper;
 import helpers.WaitHelper;
 import helpers.WindowHelper;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.WebElement;
 
 public class Link extends BaseElement {
-    private final Logger logger = LogManager.getLogger(Link.class);
 
     public Link(WebElement webElement) {
         super(webElement);

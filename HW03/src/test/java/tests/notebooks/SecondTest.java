@@ -27,7 +27,7 @@ public class SecondTest extends BaseTest {
 
         //3. Assert
         //Проверить, что отображается текст
-        // Техника для дома
+        //Техника для дома
         //Техника для кухни
         //Встроенная техника
         StartPageTextDisplayMatcher startPageTextDisplayMatcher = new StartPageTextDisplayMatcher(startPage);

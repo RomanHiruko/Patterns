@@ -11,7 +11,9 @@ public class LinkContainsValueMatcher {
         this.page = page;
     }
 
-    public void linkContainsValue(Link link, String value) {
-        Assertions.assertTrue(link.getText().contains(value), "Текст не содержит значение!");
+    public void linkContainsValue(Link[] links, String[] values) {
+        for (int i = 0; i < links.length; i++) {
+            Assertions.assertTrue(links[i].getText().contains(values[i]), "Текст не содержит значение!");
+        }
     }
 }
