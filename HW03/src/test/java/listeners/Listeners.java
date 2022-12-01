@@ -12,16 +12,16 @@ public class Listeners implements WebDriverListener {
 
     @Override
     public void afterClick(WebElement element) {
-        logger.info("Нажата кнопка " + element.getText());
+        logger.info("Нажата кнопка");
     }
 
     @Override
     public void afterFindElement(WebDriver driver, By locator, WebElement result) {
-        logger.info("Найден элемент " + result.getText());
+        logger.info("Найден элемент");
     }
 
     @Override
     public void afterGetText(WebElement element, String result) {
-        logger.info("Получен текст " + result);
+        logger.info("Получен текст");
     }
 }
