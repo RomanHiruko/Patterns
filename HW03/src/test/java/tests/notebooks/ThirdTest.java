@@ -1,117 +1,120 @@
 package tests.notebooks;
 
 import elements.Link;
-import helpers.JavaScriptHelper;
-import helpers.ScreenshotHelper;
 import helpers.WaitHelper;
 import listeners.Listeners;
+import models.BL;
+import models.BLBuilder;
+import models.valueobjects.Company;
+import models.valueobjects.Ram;
+import models.valueobjects.Type;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.events.EventFiringDecorator;
 import pages.NotebookPage;
-import pages.NotebooksPage;
-import pages.StartPage;
+import steps.NotebookProductPageSteps;
+import steps.NotebooksPageSteps;
+import steps.StartPageSteps;
 import tests.BaseTest;
-import tests.notebooks.matchers.LinkContainsValueMatcher;
-import tests.notebooks.matchers.NotebookTitleMatcher;
+import tests.notebooks.matchers.NotebookProductPageMatcher;
 
 public class ThirdTest extends BaseTest {
     String titleOldWindow;
 
     @Test
-    public void dnsTest() {
+    public void expectedEqualsActualTitleDnsTest() {
+
+        //1. Arrange
+        String expected = "16\" Ноутбук ASUS ROG Flow x16 GV601RM-M6059W черный";
+        String company = "ASUS";
+        int ram = 32;
+        int rom = 256;
+        String model = "S22";
+        String type = "Сначала дорогие";
+        BLBuilder blbuilder = new BLBuilder(
+                new Ram(ram),
+                new Company(company),
+                new Type(type))
+                .setRom(rom)
+                .setModel(model);
+        BL bl = blbuilder.build();
+
+        //2. Act
+        NotebookProductPageSteps notebookPage = getNotebookPage(bl);
+
+        //3. Assert
+        //Проверить, что первый товар соответствует ожидаемому
+        NotebookProductPageMatcher notebookProductPageMatcher = new NotebookProductPageMatcher(notebookPage);
+        notebookProductPageMatcher.pageTitleEquals(titleOldWindow, expected);
+    }
+
+    @Test
+    public void linkContainsValueDnsTest() {
         NotebookPage np = new NotebookPage(driver);
 
         //1. Arrange
         Link[] links = {np.textDescription(), np.textRam()};
         String[] values = {"ASUS", "32 ГБ"};
-        String expected = "16\" Ноутбук ASUS ROG Flow X16 GV601RW-M6064X черный";
         String company = "ASUS";
-        String ram = "32 ГБ";
+        int ram = 32;
+        int rom = 256;
+        String model = "S22";
         String type = "Сначала дорогие";
+        BLBuilder blbuilder = new BLBuilder(
+                new Ram(ram),
+                new Company(company),
+                new Type(type))
+                .setRom(rom)
+                .setModel(model);
+        BL bl = blbuilder.build();
 
         //2. Act
-        NotebookPage notebookPage = getNotebookPage(company, ram, type);
+        NotebookProductPageSteps notebookPage = getNotebookPage(bl);
 
         //3. Assert
-        //Проверить, что первый товар соответствует ожидаемому
-        NotebookTitleMatcher notebookTitleMatcher = new NotebookTitleMatcher(notebookPage);
-        notebookTitleMatcher.pageTitleEquals(titleOldWindow, expected);
-
         //Проверить, что в разделе Характеристики содержится значение ASUS
         //Проверить, что значение ОЗУ равно 32 ГБ
-        LinkContainsValueMatcher linkContainsValueMatcher = new LinkContainsValueMatcher(notebookPage);
-        linkContainsValueMatcher.linkContainsValue(links, values);
+        NotebookProductPageMatcher notebookProductPageMatcher = new NotebookProductPageMatcher(notebookPage);
+        notebookProductPageMatcher.linkContainsValue(links, values);
     }
 
-    public NotebookPage getNotebookPage(String company, String ram, String type) {
+    public NotebookProductPageSteps getNotebookPage(BL bl) {
         //Регистрация слушателя событий
         Listeners listener = new Listeners();
         WebDriver eventFiringWebDriver = new EventFiringDecorator<>(listener).decorate(driver);
 
         //Открыть страницы DNS
-        StartPage startPage = new StartPage(eventFiringWebDriver);
-        startPage.openPage();
-
-        //Нажать кнопку всё верно и сделать скриншот
-        startPage.buttonYes().click();
-        WaitHelper.readyStateComplete();
-        ScreenshotHelper.makeScreenshot();
-
-        //Навести курсор на ссылку Компьютеры и периферия и сделать скриншот после открытия меню
-        startPage.linkPcAndPeripheral().focusOnLink();
-        WaitHelper.clickabilityOfElement(startPage.linkNotebooks().getWebElement());
-        ScreenshotHelper.makeScreenshot();
+        StartPageSteps startPage = new StartPageSteps(eventFiringWebDriver);
 
         //Перейти по ссылке Ноутбуки
-        startPage.linkPcAndPeripheral().focusOnLink();
-        WaitHelper.clickabilityOfElement(startPage.linkNotebooks().getWebElement());
-        startPage.linkNotebooks().click();
-
-        //Сделать скриншот
-        NotebooksPage notebooksPage = new NotebooksPage(eventFiringWebDriver);
-        ScreenshotHelper.makeScreenshot();
-
-        //Скрыть header и сделать скриншот
-        notebooksPage.blockHeader().hide();
-        ScreenshotHelper.makeScreenshot();
+        startPage.goToNotebooksPage();
+        NotebooksPageSteps notebooksPage = new NotebooksPageSteps(eventFiringWebDriver);
 
         //Выбрать сортировку Сначала дорогое
-        notebooksPage.accordeonSort().show();
-        notebooksPage.radioButtonSort(type).setSelected(true);
+        notebooksPage.orderBy(bl.getType().getType());
 
         //Выбрать в фильтре Производитель значение ASUS
-        JavaScriptHelper.scrollIntoView(notebooksPage.checkBoxCompany(company).getWebElement());
-        notebooksPage.checkBoxCompany(company).setChecked(true);
+        notebooksPage.filterByCompany(bl.getCompany().getCompany());
 
         //Выбрать в фильтре Объем оперативной памяти значение 32 ГБ
-        JavaScriptHelper.scrollIntoView(notebooksPage.accordeonRAM().getWebElement());
-        notebooksPage.accordeonRAM().show();
-        notebooksPage.checkboxRAM(ram).setChecked(true);
+        notebooksPage.filterByRAM(bl.getRam().getRam());
 
         //Применить фильтры и сделать скриншот
-        JavaScriptHelper.scrollIntoView(notebooksPage.buttonApply().getWebElement());
-        notebooksPage.buttonApply().click();
-        WaitHelper.propertyLoad(notebooksPage.linkCatalog().getWebElement(), "style", "[]");
-        ScreenshotHelper.makeScreenshot();
+        notebooksPage.applyFilter();
 
         //Перейти на страницу первого продукта в списке
         //Страница открывается в новом окне
         //Страница открывается в максимизированном режиме (не fullscreen)
         //Получить название первого товара
-        this.titleOldWindow = notebooksPage.linkFirstProduct().getAttribute("outerText");
-        notebooksPage.linkFirstProduct().openInNewWindow();
-
-        //Сделать скриншот
-        NotebookPage notebookPage = new NotebookPage(eventFiringWebDriver);
-        ScreenshotHelper.makeScreenshot();
+        WaitHelper.sleep(1000);
+        this.titleOldWindow = notebooksPage.getName();
+        notebooksPage.goToFirstProduct();
 
         //Нажать кнопку Развернуть все
-        JavaScriptHelper.scrollIntoView(notebookPage.buttonExpand().getWebElement());
-        notebooksPage.blockHeader().hide();
-        notebookPage.buttonExpand().click();
-        JavaScriptHelper.scrollBy(0, -2000);
+        NotebookProductPageSteps notebookProductPageSteps =
+                new NotebookProductPageSteps(eventFiringWebDriver);
+        notebookProductPageSteps.clickButtonExpandAll();
 
-        return new NotebookPage(eventFiringWebDriver);
+        return new NotebookProductPageSteps(eventFiringWebDriver);
     }
 }

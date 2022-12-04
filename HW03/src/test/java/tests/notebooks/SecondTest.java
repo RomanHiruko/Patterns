@@ -1,111 +1,99 @@
 package tests.notebooks;
 
 import elements.Link;
-import helpers.ActionHelper;
-import helpers.ScreenshotHelper;
-import helpers.WaitHelper;
 import org.junit.jupiter.api.Test;
 import pages.KettlesPage;
 import pages.StartPage;
+import steps.StartPageSteps;
 import tests.BaseTest;
-import tests.notebooks.matchers.CategoriesCountMatcher;
-import tests.notebooks.matchers.StartPageTextDisplayMatcher;
+import tests.notebooks.matchers.StartPageMatcher;
 import tests.notebooks.matchers.TitleCountProductPageMatcher;
 
 public class SecondTest extends BaseTest {
 
     @Test
-    public void dnsTest() {
-        StartPage startPage = new StartPage(driver);
+    public void appliancesTextArrestDnsTest() {
+        StartPage sp = new StartPage(driver);
 
         //1. Arrange
-        Link[] args = {startPage.linkKitchenAppliances(), startPage.linkHomeAppliances(), startPage.linkEmbeddedTechnology()};
+        Link[] args = {sp.linkKitchenAppliances(), sp.linkHomeAppliances(), sp.linkEmbeddedTechnology()};
 
         //2. Act
         //Перейти по ссылке DNS
-        startPage = focusLinkAppliancesAndMakeScreen();
+        StartPageSteps startPage = focusLinkAppliances();
 
         //3. Assert
         //Проверить, что отображается текст
         //Техника для дома
         //Техника для кухни
         //Встроенная техника
-        StartPageTextDisplayMatcher startPageTextDisplayMatcher = new StartPageTextDisplayMatcher(startPage);
-        startPageTextDisplayMatcher.linkDisplay(args);
+        StartPageMatcher startPageMatcher = new StartPageMatcher(startPage);
+        startPageMatcher.linkDisplay(args);
+    }
 
-        //4. Act
-        //Навести на ссылку Приготовление напитков
-        startPage = linkDrinksPreparationAndScreen();
+    @Test
+    public void drinkPreparationCountDnsTest() {
+        StartPage sp = new StartPage(driver);
+        //1. Arrange -
 
-        //5. Assert
+        //2. Act
+        StartPageSteps startPage = focusLinkDrinksPreparation();
+
+        //3. Assert
         //Проверить, что количество ссылок в подменю Приготовление напитков больше 5
-        CategoriesCountMatcher categoriesCountMatcher = new CategoriesCountMatcher(startPage);
-        categoriesCountMatcher.allCategories(startPage.linksSubmenuDrinksPreparation());
+        StartPageMatcher startPageMatcher = new StartPageMatcher(startPage);
+        startPageMatcher.allCategories(sp.linksSubmenuDrinksPreparation());
+    }
 
-        //6. Act
-        //Перейти по ссылке Электрочайники
-        KettlesPage kettlesPage = linkKettlesAndScreen();
+    @Test
+    public void kettlesCountDnsTest() {
+        //1. Arrange -
 
-        //7. Assert
+        //2. Act
+        KettlesPage kettlesPage = clickLinkKettles();
+
+        //3. Assert
         //Проверить, что  количество продуктов по ссылке Электрочайники больше 1000
         TitleCountProductPageMatcher titleCountProductPageMatcher = new TitleCountProductPageMatcher(kettlesPage);
         titleCountProductPageMatcher.productCount(kettlesPage.textProductCount());
     }
 
-    public static StartPage focusLinkAppliancesAndMakeScreen() {
-        StartPage startPage = new StartPage(driver);
+    public static StartPageSteps focusLinkAppliances() {
+        StartPageSteps startPage = new StartPageSteps(driver);
 
-        //Открыть сайт DNS
         startPage.openPage();
 
         //Нажать кнопку Всё верно
-        startPage.buttonYes().click();
-        WaitHelper.readyStateComplete();
-        ScreenshotHelper.makeScreenshot();
+        startPage.clickButtonYes();
 
         //Скрыть хэдэр
-        startPage.blockHeader().hide();
+        startPage.hideHeader();
 
+        //Навести на ссылку Бытовая техника
+        startPage.focusLinkAppliances();
 
-        ActionHelper.scrollTo(startPage.linkAppliances().getWebElement());
-        startPage.linkAppliances().focusOnLink();
-        WaitHelper.clickabilityOfElement(startPage.linkDrinksPreparation().getWebElement());
-        startPage.linkDrinksPreparation().focusOnLink();
-        WaitHelper.visibilityOfElement(startPage.linkElectricKettles().getWebElement());
-        ScreenshotHelper.makeScreenshot();
-        ActionHelper.scrollTo(startPage.linkAppliances().getWebElement());
-        startPage.linkAppliances().focusOnLink();
-        WaitHelper.clickabilityOfElement(startPage.linkDrinksPreparation().getWebElement());
-        startPage.linkDrinksPreparation().focusOnLink();
-        WaitHelper.visibilityOfElement(startPage.linkElectricKettles().getWebElement());
-
-        return new StartPage(driver);
+        return new StartPageSteps(driver);
     }
 
-    public static StartPage linkDrinksPreparationAndScreen() {
-        StartPage startPage = new StartPage(driver);
+    public static StartPageSteps focusLinkDrinksPreparation() {
+        StartPageSteps startPage = new StartPageSteps(driver);
 
-        ActionHelper.scrollTo(startPage.linkAppliances().getWebElement());
-        startPage.linkAppliances().focusOnLink();
-        WaitHelper.clickabilityOfElement(startPage.linkDrinksPreparation().getWebElement());
-        startPage.linkDrinksPreparation().focusOnLink();
-        WaitHelper.visibilityOfElement(startPage.linkElectricKettles().getWebElement());
-        ScreenshotHelper.makeScreenshot();
-        ActionHelper.scrollTo(startPage.linkAppliances().getWebElement());
-        startPage.linkAppliances().focusOnLink();
-        WaitHelper.clickabilityOfElement(startPage.linkDrinksPreparation().getWebElement());
-        startPage.linkDrinksPreparation().focusOnLink();
-        WaitHelper.visibilityOfElement(startPage.linkElectricKettles().getWebElement());
+        startPage.openPage();
 
-        return new StartPage(driver);
+        //Навести на ссылку Приготовление напитков
+        startPage.clickButtonYes();
+        startPage.focusLinkAppliances();
+        startPage.focusOnLinkDrinksPreparation();
+
+        return new StartPageSteps(driver);
     }
 
-    public static KettlesPage linkKettlesAndScreen() {
-        StartPage startPage = new StartPage(driver);
+    public static KettlesPage clickLinkKettles() {
+        StartPageSteps startPage = new StartPageSteps(driver);
 
-        startPage.linkDrinksPreparation().focusOnLink();
-        startPage.linkElectricKettles().click();
-        ScreenshotHelper.makeScreenshot();
+        startPage = focusLinkDrinksPreparation();
+
+        startPage.clickLinkElectricKettles();
 
         return new KettlesPage(driver);
     }
