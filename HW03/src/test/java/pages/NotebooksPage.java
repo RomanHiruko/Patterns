@@ -13,11 +13,9 @@ import java.util.List;
 public class NotebooksPage extends BasePage {
     private Logger logger = LogManager.getLogger(NotebooksPage.class);
 
-    @FindBy(xpath = "//header")
-    private WebElement blockHeader;
-
     @FindBy(xpath = "//div[@class='products-list__content']")
     private WebElement linkCatalog;
+
     @FindBy(xpath = "//span[contains(text(), \"Сортировка:\")]/following::a")
     private WebElement accordeonSort;
 
@@ -89,10 +87,6 @@ public class NotebooksPage extends BasePage {
             }
         }
         return null;
-    }
-
-    public Block blockHeader() {
-        return new Block(blockHeader);
     }
 
     public Button buttonApply() {

@@ -3,11 +3,12 @@ package tests.notebooks.matchers;
 import elements.Link;
 import org.junit.jupiter.api.Assertions;
 import pages.AppliancesPage;
+import steps.AppliancesPageSteps;
 
 public class AppliancesTextDisplayMatcher {
-    AppliancesPage page;
+    AppliancesPageSteps page;
 
-    public AppliancesTextDisplayMatcher(AppliancesPage page) {
+    public AppliancesTextDisplayMatcher(AppliancesPageSteps page) {
         this.page = page;
     }
 

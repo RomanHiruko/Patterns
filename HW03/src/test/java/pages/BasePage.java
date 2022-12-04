@@ -1,12 +1,18 @@
 package pages;
 
+import elements.Block;
 import helpers.*;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 
 import java.time.Duration;
 
 public class BasePage {
+    @FindBy(xpath = "//header")
+    private WebElement blockHeader;
+
     protected static WebDriver driver;
 
     public BasePage(WebDriver driver) {
@@ -38,5 +44,9 @@ public class BasePage {
     public static int getY() {
         int currY = driver.manage().window().getPosition().getY();
         return currY;
+    }
+
+    public Block blockHeader() {
+        return new Block(blockHeader);
     }
 }

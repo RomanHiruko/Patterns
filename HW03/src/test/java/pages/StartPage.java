@@ -6,7 +6,6 @@ import elements.Button;
 import elements.Link;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -52,30 +51,10 @@ public class StartPage extends BasePage {
     @FindBy(xpath = "//a[text()='Ноутбуки']")
     private WebElement linkNotebooks;
 
-    @FindBy(xpath = "//header")
-    private WebElement blockHeader;
-
     public StartPage(WebDriver driver) {
         super(driver);
 
         PageFactory.initElements(driver, this);
-    }
-
-    public String getURL() {
-        logger.info((this.URL) + "");
-        return this.URL;
-    }
-
-    public Dimension getSize() {
-        Dimension size = driver.manage().window().getSize();
-        logger.info(size);
-        return size;
-    }
-
-    public String getPageTitle() {
-        String title = driver.getTitle();
-        logger.info(title);
-        return title;
     }
 
     public void openPage() {
@@ -125,9 +104,5 @@ public class StartPage extends BasePage {
 
     public Link linkNotebooks() {
         return new Link(linkNotebooks);
-    }
-
-    public Block blockHeader() {
-        return new Block(blockHeader);
     }
 }

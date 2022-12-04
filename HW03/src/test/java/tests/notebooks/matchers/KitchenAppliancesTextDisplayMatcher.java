@@ -5,7 +5,6 @@ import org.junit.jupiter.api.Assertions;
 import pages.KitchenAppliancesPage;
 
 public class KitchenAppliancesTextDisplayMatcher {
-
     KitchenAppliancesPage page;
 
     public KitchenAppliancesTextDisplayMatcher(KitchenAppliancesPage page) {

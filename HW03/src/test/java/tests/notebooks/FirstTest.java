@@ -1,78 +1,94 @@
 package tests.notebooks;
 
 import elements.Link;
-import helpers.ActionHelper;
-import helpers.ScreenshotHelper;
-import helpers.WaitHelper;
 import org.junit.jupiter.api.Test;
 import pages.AppliancesPage;
 import pages.KitchenAppliancesPage;
-import pages.StartPage;
+import steps.AppliancesPageSteps;
+import steps.StartPageSteps;
 import tests.BaseTest;
 import tests.notebooks.matchers.AppliancesTextDisplayMatcher;
 import tests.notebooks.matchers.KitchenAppliancesTextDisplayMatcher;
 
 public class FirstTest extends BaseTest {
     @Test
-    public void dnsTest() {
+    public void textAppliancesDisplayedDnsTest() {
+        AppliancesPage ap = new AppliancesPage(driver);
+
+        //1. Arrange -
+
+        //2.Act
+        //Открыть страницу DNS
+        AppliancesPageSteps appliancesPage = clickLinkAppliances();
+
+        //3. Assert
+        //Проверить, что отображается текст Бытовая техника
+        AppliancesTextDisplayMatcher appliancesTextDisplayMatcher = new AppliancesTextDisplayMatcher(appliancesPage);
+        appliancesTextDisplayMatcher.pageTitleDisplay(ap.textAppliances());
+    }
+
+    @Test
+    public void kitchenTextDisplayedDnsTest() {
         KitchenAppliancesPage ktp = new KitchenAppliancesPage(driver);
 
         //1. Arrange
         Link[] args = {ktp.textKitchenAppliances(), ktp.linkMakeKitchen()};
 
         //2.Act
-        //Открыть страницу DNS
-        AppliancesPage appliancesPage = clickLinkAppliancesAndMakeScreen();
-
-        //3. Assert
-        //Проверить, что отображается текст Бытовая техника
-        AppliancesTextDisplayMatcher appliancesTextDisplayMatcher = new AppliancesTextDisplayMatcher(appliancesPage);
-        appliancesTextDisplayMatcher.pageTitleDisplay(appliancesPage.textAppliances());
-
-        //4. Act
         //Перейти по ссылке Техника для кухни
-        appliancesPage.linkKitchenAppliances().click();
-        KitchenAppliancesPage kitchenAppliancesPage = new KitchenAppliancesPage(driver);
+        KitchenAppliancesPage kitchenAppliancesPage = clickKitchenAppliances();
 
-        //5.Assert
+        //3.Assert
         //Проверить, что отображается текст Техника для кухни
         //Проверить, что отображается текст Собери свою кухню
         KitchenAppliancesTextDisplayMatcher kitchenAppliancesTextDisplayMatcher = new KitchenAppliancesTextDisplayMatcher(kitchenAppliancesPage);
         kitchenAppliancesTextDisplayMatcher.pageTitleDisplay(args);
-
-        //Вывести название всех категорий
-        kitchenAppliancesPage.allCategories();
     }
 
-    public static AppliancesPage clickLinkAppliancesAndMakeScreen() {
-        StartPage startPage = new StartPage(driver);
+    @Test
+    public void displayAllCategoriesDnsTest() {
+        KitchenAppliancesPage kitchenAppliancesPage;
+
+        //1. Arrange
+
+        //2.Act
+        //Вывести название всех категорий
+        kitchenAppliancesPage = displayAllCategories();
+    }
+
+    public static AppliancesPageSteps clickLinkAppliances() {
+        StartPageSteps startPage = new StartPageSteps(driver);
 
         //Перейти по ссылке DNS
         startPage.openPage();
 
-        //Нажать кнопку Всё верно и сделать скриншот
-        startPage.buttonYes().click();
-        WaitHelper.readyStateComplete();
-        ScreenshotHelper.makeScreenshot();
+        //Нажать кнопку Всё верно
+        startPage.clickButtonYes();
 
         //Скрыть хэдэр
-        startPage.blockHeader().hide();
+        startPage.hideHeader();
 
         //Вывести в логи:
         //Текущий URL
-        startPage.getURL();
-
         //Заголовок страницы
-        startPage.getPageTitle();
-
         //Размер окна браузера
-        startPage.getSize();
+        startPage.printInfo();
 
         //Нажать на ссылку Бытовая техника
-        ActionHelper.scrollTo(startPage.linkAppliances().getWebElement());
-        startPage.linkAppliances().click();
-        ScreenshotHelper.makeScreenshot();
+        startPage.clickLinkAppliances();
 
-        return new AppliancesPage(driver);
+        return new AppliancesPageSteps(driver);
+    }
+
+    public static KitchenAppliancesPage clickKitchenAppliances() {
+        AppliancesPageSteps appliancesPage = clickLinkAppliances();
+        appliancesPage.clickLinkKitchenAppliances();
+        return new KitchenAppliancesPage(driver);
+    }
+
+    public static KitchenAppliancesPage displayAllCategories() {
+        KitchenAppliancesPage kitchenAppliancesPage = clickKitchenAppliances();
+        kitchenAppliancesPage.allCategories();
+        return new KitchenAppliancesPage(driver);
     }
 }
